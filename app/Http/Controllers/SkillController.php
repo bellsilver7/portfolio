@@ -13,6 +13,7 @@ class SkillController extends Controller
     public function index()
     {
         $skills = SkillResource::collection(Skill::all());
+
         return Inertia::render('Skills/Index', compact('skills'));
     }
 
@@ -66,7 +67,11 @@ class SkillController extends Controller
         return redirect()->route('skills.index');
     }
 
-    public function destroy()
+    public function destroy(Skill $skill)
     {
+        Storage::delete($skill->image);
+        $skill->delete();
+
+        return redirect()->back();
     }
 }
