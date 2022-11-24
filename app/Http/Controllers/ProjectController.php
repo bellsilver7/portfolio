@@ -14,12 +14,14 @@ class ProjectController extends Controller
     public function index()
     {
         $projects = ProjectResource::collection(Project::with('skill')->get());
+
         return Inertia::render('Projects/Index', compact('projects'));
     }
 
     public function create()
     {
         $skills = Skill::all();
+
         return Inertia::render('Projects/Create', compact('skills'));
     }
 
@@ -31,24 +33,26 @@ class ProjectController extends Controller
             'image' => ['required', 'image'],
         ]);
 
-        if ($request->has('image')) {
-            $image = $request->file('image')->store('projects');
-            Project::create([
-                'skill_id' => $request->skill_id,
-                'name' => $request->name,
-                'project_url' => $request->project_url,
-                'image' => $image,
-            ]);
-
-            return redirect()->route('projects.index');
+        if (!$request->has('image')) {
+            return redirect()->back();
         }
 
-        return redirect()->back();
+        $image = $request->file('image')->store('projects');
+
+        Project::create([
+            'skill_id' => $request->skill_id,
+            'name' => $request->name,
+            'image' => $image,
+            'project_url' => $request->project_url,
+        ]);
+
+        return redirect()->route('projects.index')->with('message', 'Project created successfully!');
     }
 
     public function edit(Project $project)
     {
         $skills = Skill::all();
+
         return Inertia::render('Projects/Edit', compact('project', 'skills'));
     }
 
@@ -72,7 +76,7 @@ class ProjectController extends Controller
             'image' => $image,
         ]);
 
-        return redirect()->route('projects.index');
+        return redirect()->route('projects.index')->with('message', 'Project updated successfully!');;
     }
 
     public function destroy(Project $project)
@@ -80,6 +84,6 @@ class ProjectController extends Controller
         Storage::delete($project->image);
         $project->delete();
 
-        return redirect()->back();
+        return redirect()->back()->with('message', 'Project deleted successfully!');;
     }
 }

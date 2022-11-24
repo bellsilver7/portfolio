@@ -25,21 +25,22 @@ class SkillController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'image' => ['required', 'image'],
             'name' => ['required', 'min:3'],
+            'image' => ['required', 'image'],
         ]);
 
-        if ($request->has('image')) {
-            $image = $request->file('image')->store('skills');
-            Skill::create([
-                'name' => $request->name,
-                'image' => $image,
-            ]);
-
-            return redirect()->route('skills.index');
+        if (!$request->has('image')) {
+            return redirect()->back();
         }
 
-        return redirect()->back();
+        $image = $request->file('image')->store('skills');
+
+        Skill::create([
+            'name' => $request->name,
+            'image' => $image,
+        ]);
+
+        return redirect()->route('skills.index')->with('message', 'Skill created successfully!');
     }
 
     public function edit(Skill $skill)
@@ -49,11 +50,11 @@ class SkillController extends Controller
 
     public function update(Request $request, Skill $skill)
     {
-        $image = $skill->image;
         $request->validate([
             'name' => ['required', 'min:3'],
         ]);
 
+        $image = $skill->image;
         if ($request->hasFile('image')) {
             Storage::delete($skill->image);
             $image = $request->file('image')->store('skills');
@@ -64,7 +65,7 @@ class SkillController extends Controller
             'image' => $image
         ]);
 
-        return redirect()->route('skills.index');
+        return redirect()->route('skills.index')->with('message', 'Skill updated successfully!');;
     }
 
     public function destroy(Skill $skill)
@@ -72,6 +73,6 @@ class SkillController extends Controller
         Storage::delete($skill->image);
         $skill->delete();
 
-        return redirect()->back();
+        return redirect()->back()->with('message', 'Skill deleted successfully!');;
     }
 }
