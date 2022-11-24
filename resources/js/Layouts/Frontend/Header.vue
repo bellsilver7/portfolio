@@ -10,15 +10,15 @@ const showMobileMenu = ref(false);
         <div
             class="container flex flex-wrap items-center justify-between mx-auto"
         >
-            <a href="https://flowbite.com/" class="flex items-center">
+            <a href="http://portfolio.test/" class="flex items-center">
                 <img
-                    src="https://flowbite.com/docs/images/logo.svg"
+                    src="http://portfolio.test/images/logo.png"
                     class="h-6 mr-3 sm:h-9"
-                    alt="Flowbite Logo"
+                    alt="J.Silv Logo"
                 />
                 <span
                     class="self-center text-xl font-semibold whitespace-nowrap dark:text-white"
-                    >Flowbite</span
+                    >J.Silv</span
                 >
             </a>
             <button
