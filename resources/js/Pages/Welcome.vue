@@ -3,6 +3,7 @@ import { Head, Link } from "@inertiajs/inertia-vue3";
 import FrontendLayout from "@/Layouts/FrontendLayout.vue";
 import Hero from "@/Layouts/Frontend/Hero.vue";
 import Promote from "@/Layouts/Frontend/Promote.vue";
+import About from "@/Layouts/Frontend/About.vue";
 </script>
 
 <template>
@@ -10,7 +11,7 @@ import Promote from "@/Layouts/Frontend/Promote.vue";
     <FrontendLayout>
         <Hero />
         <Promote />
-        <!-- About secondary -->
+        <About />
         <!-- Skills tail-100 -->
         <!-- Portfolio primary -->
         <!-- Services secondary -->
