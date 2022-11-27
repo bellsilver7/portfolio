@@ -1,13 +1,15 @@
 <script setup>
-import { Head, Link } from "@inertiajs/inertia-vue3";
+import { Head } from "@inertiajs/inertia-vue3";
 import FrontendLayout from "@/Layouts/FrontendLayout.vue";
 import Hero from "@/Layouts/Frontend/Hero.vue";
 import Promote from "@/Layouts/Frontend/Promote.vue";
 import About from "@/Layouts/Frontend/About.vue";
 import Skills from "@/Layouts/Frontend/Skills.vue";
+import Portfolio from "@/Layouts/Frontend/Portfolio.vue";
 
 defineProps({
     skills: Object,
+    projects: Object,
 });
 </script>
 
@@ -18,7 +20,7 @@ defineProps({
         <Promote />
         <About />
         <Skills :skills="skills" />
-        <!-- Portfolio primary -->
+        <Portfolio :skills="skills" :projects="projects" />
         <!-- Services secondary -->
         <!-- Contact primary -->
     </FrontendLayout>
