@@ -34,7 +34,7 @@ const props = defineProps({
         </nav>
         <section class="grid gap-y-12 lg:grid-cols-3 lg:gap-8">
             <Project
-                v-for="project in filteredProjects"
+                v-for="project in projects.data"
                 :key="project.id"
                 :project="project"
             />
