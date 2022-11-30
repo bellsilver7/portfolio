@@ -66,7 +66,7 @@ onMounted(() => {
             </button>
             <div
                 class="w-full md:block md:w-auto"
-                :class="{ hidden: showMobileMenu }"
+                :class="{ hidden: !showMobileMenu }"
                 id="navbar-default"
             >
                 <ul
