@@ -1,11 +1,31 @@
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 
 const showMobileMenu = ref(false);
+const scrollBg = ref(false);
+const navigations = [
+    { name: "Home", href: "#home" },
+    { name: "About", href: "#about" },
+    { name: "Portfolio", href: "#portfolio" },
+    { name: "Services", href: "#services" },
+    { name: "Contact", href: "#contact" },
+];
+
+const setScrollBg = (value) => (scrollBg.value = value);
+
+onMounted(() => {
+    window.addEventListener("scroll", () => {
+        return window.scrollY > 50 ? setScrollBg(true) : setScrollBg(false);
+    });
+});
 </script>
 <template>
     <nav
-        class="bg-light-primary border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-dark-primary"
+        :class="{
+            'bg-light-primary dark:bg-dark-primary': scrollBg,
+            'bg-white dark:bg-slate-800': !scrollBg,
+        }"
+        class="w-full fixed z-20 border-gray-200 px-2 sm:px-4 py-2.5 rounded"
     >
         <div
             class="container flex flex-wrap items-center justify-between mx-auto"
@@ -52,40 +72,11 @@ const showMobileMenu = ref(false);
                 <ul
                     class="flex flex-col p-4 mt-4 border border-light-tail-500 dark:border-dark-navy-100 rounded-lg md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0"
                 >
-                    <li>
+                    <li v-for="(navigation, index) in navigations" :key="index">
                         <a
-                            href="#"
-                            class="block py-2 pl-3 pr-4 text-white bg-light-tail-500 dark:bg-dark-navy-100 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white"
-                            aria-current="page"
-                            >Home</a
-                        >
-                    </li>
-                    <li>
-                        <a
-                            href="#"
-                            class="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                            >About</a
-                        >
-                    </li>
-                    <li>
-                        <a
-                            href="#"
-                            class="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                            >Services</a
-                        >
-                    </li>
-                    <li>
-                        <a
-                            href="#"
-                            class="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                            >Pricing</a
-                        >
-                    </li>
-                    <li>
-                        <a
-                            href="#"
-                            class="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                            >Contact</a
+                            :href="navigation.href"
+                            class="block py-2 pr-4 pl-3 text-light-tail-500 dark:text-dark-navy-100 hover:text-light-tail-100 dark:hover:text-white rounded"
+                            >{{ navigation.name }}</a
                         >
                     </li>
                 </ul>
